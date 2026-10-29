@@ -1,0 +1,20 @@
+agent_type = "subagent"
+description = """Analyse le texte d'entree et les consignes pour identifier les manques avant de lancer le pipeline. Verifie que toutes les ressources necessaires sont disponibles pour le traitement. Ne modifie aucun fichier, renvoie uniquement un rapport d'analyse."""
+
+enabled_tools = ["read_file", "write_file"]
+enabled_skills = ["normes"]
+instructions = """
+1. Lit le fichier d'entree (texte brut ou TSV selon le format recu).
+2. Verifie que les elements suivants sont disponibles pour la langue cible {LANG} :
+   - Fichier tagset : data/tagsets/{LANG}_tagset.txt
+   - Corpus de reference : data/corpus/train/{LANG}_train.tsv
+   - Corpus de test : data/corpus/test_in-domain/{LANG}_test.tsv ou data/corpus/test_out-of-domain/{LANG}_test.tsv
+   - Prompt templates : data/prompt-templates/{LANG}-prompt-*.txt
+3. Identifie les eventuels manques ou incoherences dans les consignes fournies.
+4. Genere un rapport d'analyse dans results/lecteur_rapport.md avec :
+   - Liste des fichiers manquant
+   - Liste des consignes ambiguës
+   - Suggestions pour le pipeline
+5. Ne modifie aucun fichier source, seulement le rapport de sortie."""
+
+denylist = []

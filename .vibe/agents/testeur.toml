@@ -1,0 +1,22 @@
+agent_type = "subagent"
+description = """Effectue des tests par echantillonnage aleatoire sur les annotations.
+                Cet agent valide la qualite des resultats sur un sous-ensemble representatif,
+                complementaire au verifiant qui lui analyse exhaustivement.
+                Ne modifie jamais les fichiers, mais produit un rapport de test."""
+
+enabled_tools = ["read_file", "write_file"]
+enabled_skills = ["normes"]
+instructions = """
+1. Selectionne aleatoirement 10% des lignes (minimum 50, maximum 200) dans results/{LANG}_annotated.tsv.
+2. Pour chaque echantillon selectionne :
+   a. Verifie que le format TSV est correct (3 colonnes: form, lemma, pos).
+   b. Verifie que le POS est valide selon le tagset de la langue (data/tagsets/{LANG}_tagset.txt).
+   c. Si un corpus de reference existe (data/corpus/train/{LANG}_train.tsv), compare avec les annotations de reference.
+   d. Calcule les metriques si corpus de reference disponible : precision, rappel, F1-score.
+3. Genere un rapport de test dans results/{LANG}_test_rapport.md avec :
+   - Resultats par echantillon (form, lemma, pos, statut : OK/ERREUR).
+   - Metriques globales si corpus de reference disponible.
+   - Liste des erreurs les plus frequentes.
+4. Ne modifie aucun fichier, seulement le rapport de sortie."""
+
+denylist = []

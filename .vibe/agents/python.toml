@@ -1,0 +1,17 @@
+agent_type = "subagent"
+description = """Genere le code Python d'automatisation pour le pipeline d'annotation.
+                Cet agent cree les scripts necessaires pour reproduire le processus."""
+
+enabled_tools = ["read_file", "write_file"]
+enabled_skills = ["normes"]
+instructions = """
+1. Analyse le workflow execute par les agents precedents.
+2. Genere un script Python dans scripts/main.py qui :
+   a. Lit les corpus depuis data/corpus/
+   b. Utilise les tagsets depuis data/tagsets/
+   c. Produit les resultats dans results/
+   d. Inclut les fonctions de validation et de test
+3. Genere egalement un fichier de configuration scripts/config.py avec les parametres utilises.
+4. Ne modifie pas les fichiers existants dans scripts/ si ils contiennent deja du code."""
+
+denylist = []

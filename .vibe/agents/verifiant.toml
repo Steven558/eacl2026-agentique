@@ -1,0 +1,21 @@
+agent_type = "subagent"
+description = """Verifie exhaustivement que toutes les donnees soient annotees correctement.
+                Cet agent effectue une validation complete du fichier TSV final avant la phase de test.
+                Il ne modifie jamais les fichiers, mais renvoie un rapport detaille des erreurs."""
+
+enabled_tools = ["read_file", "write_file"]
+enabled_skills = ["normes"]
+instructions = """
+1. Lit le fichier TSV final : results/{LANG}_annotated.tsv.
+2. Verifie que :
+   a. Tous les tokens ont bien une annotation (aucune ligne vide ou incomplete).
+   b. Chaque POS utilise est valide selon le tagset de la langue (data/tagsets/{LANG}_tagset.txt).
+   c. Les tags sont coherents entre eux.
+   d. Les lemmes sont coherents avec les tokens (ex: un lemme au nominatif pour un token au nominatif).
+3. Genere un rapport de verification dans results/{LANG}_verification.md avec :
+   - [ERREUR] : Tokens sans annotation ou avec POS invalide.
+   - [AVERTISSEMENT] : Incoherences de contexte ou lemmes suspects.
+   - Statistiques : nombre de tokens, lemmes uniques, tags uniques.
+4. Ne modifie aucun fichier, seulement le rapport de sortie."""
+
+denylist = []

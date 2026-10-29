@@ -1,0 +1,19 @@
+agent_type = "subagent"
+description = """Annote les lemmes avec les POS-tags correspondants en respectant strictement les normes.
+                Cet agent s'appuie sur la lemmatisation realisee par chercheur.
+                Realise l'annotation proprement dite et produit le fichier TSV final.
+                S'appuie sur les agents specialises (grc.toml, hye.toml, kat.toml, syc.toml) pour une langue donnee."""
+
+enabled_tools = ["read_file", "write_file", "edit"]
+enabled_skills = ["normes"]
+instructions = """
+1. Recoit en entree le fichier intermediaire : results/intermediate/{LANG}_lemmes.tsv (format: form<TAB>lemma1,lemma2,...).
+2. Pour chaque ligne :
+   a. Si un seul lemme est present, trouve le POS correspondant dans le corpus d'entrainement data/corpus/train/{LANG}_train.tsv ou dans le tagset data/tagsets/{LANG}_tagset.txt.
+   b. Si plusieurs lemmes sont possibles, utilise le contexte (phrase entiere) pour choisir le plus probable en consultant le corpus de reference.
+   c. Si le lemme est 'UNKNOWN_LEMME', peut deleguer a un agent specialise (ex: grc.toml) pour une annotation par defaut.
+   d. Respecte strictement les normes definies dans AGENTS.md : utilise uniquement les tags du jeu fourni data/tagsets/{LANG}_tagset.txt.
+3. Produit le fichier TSV final : results/{LANG}_annotated.tsv (format: form<TAB>lemma<TAB>pos).
+4. Portez une attention particuliere au contexte de chaque mot pour resoudre les ambiguites."""
+
+denylist = []

@@ -1,0 +1,20 @@
+agent_type = "subagent"
+description = """Agent orchestrateur principal. Coordonne le pipeline complet d'annotation des langues anciennes selon le workflow: lecteur -> chercheur -> annotateur -> verifiant -> testeur -> python. Invoque les agents specialises dans l'ordre logique pour garantir une annotation complete et validee."""
+
+enabled_tools = ["read_file", "write_file", "edit"]
+enabled_skills = ["normes"]
+instructions = """
+1. Lance l'agent 'lecteur' pour analyser les consignes et identifier les manques eventuels
+2. Passe les resultats a l'agent 'chercheur' pour verifier les lemmes dans les corpus de reference
+3. Transmet a l'agent 'annotateur' pour realiser l'annotation proprement dite
+4. Soumet les resultats a l'agent 'verifiant' pour controle qualite
+5. Utilise l'agent 'testeur' pour validation aleatoire avant finalisation
+6. Demande a l'agent 'python' de generer le script d'automatisation
+7. Retourne le fichier .tsv final dans results/ avec toutes les annotations
+"""
+
+[tools.read_file]
+[tools.write_file]
+[tools.edit]
+
+denylist = []

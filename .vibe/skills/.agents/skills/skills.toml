@@ -1,0 +1,7 @@
+---
+name: internet
+# minuscules, tirets, ≤ 64
+description: l'agentique peux, lorsque la commande l'impose, aller sur internet pour chercher des informations. Toutes recherches sur internet doit etre valide prelablement. 
+---
+# Méthode
+chargée à l'activation

@@ -1,0 +1,21 @@
+agent_type = "subagent"
+description = """Cherche les lemmes correspondants aux formes donnees dans le texte.
+                Utilise les corpus de reference pour chaque langue et prepare les donnees
+                pour l'annotateur. Compile une base de lemmes pour la langue cible.
+                Peut deleguer a un agent specialise (grc.toml, hye.toml, kat.toml, syc.toml) si la langue est identifiee."""
+
+enabled_tools = ["read_file", "write_file", "edit"]
+enabled_skills = ["normes"]
+instructions = """
+1. Recoit en entree un fichier de tokens ou un corpus de test (data/corpus/test_in-domain/{LANG}_test.tsv ou data/corpus/test_out-of-domain/{LANG}_test.tsv).
+2. Pour chaque token dans la colonne 'form' :
+   a. Identifie la langue (GRC, HYE, KAT, SYC) depuis le contexte ou le nom du fichier.
+   b. Si la langue est identifiee, peut deleguer le traitement a l'agent specialise (ex: grc.toml).
+   c. Sinon, cherche le lemme dans le corpus d'entrainement data/corpus/train/{LANG}_train.tsv (colonne 'lemma' correspondante).
+   d. Si plusieurs lemmes sont possibles pour une forme, conserve-les tous (separes par ',').
+   e. Si aucun lemme n'est trouve, marque comme 'UNKNOWN_LEMME'.
+3. Produit un fichier intermediaire dans results/intermediate/{LANG}_lemmes.tsv avec format: form<TAB>lemma1,lemma2,...
+4. Signale les tokens non trouves dans results/chercheur_unknown.md.
+5. Ne s'arrete jamais en cas d'erreur : continue et note les problemes."""
+
+denylist = []

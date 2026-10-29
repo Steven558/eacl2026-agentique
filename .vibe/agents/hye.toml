@@ -1,0 +1,23 @@
+agent_type = "subagent"
+description = """Agent specialise dans le traitement de l'armenien classique (HYE).
+                Realise la lemmatisation et l'annotation POS pour les textes en armenien,
+                en utilisant le tagset HYE et les corpus de reference.
+                Peut etre appele par n'importe quel autre agent pour traiter des donnees en armenien."""
+
+enabled_tools = ["read_file", "write_file", "edit"]
+enabled_skills = ["normes"]
+instructions = """
+1. Pour chaque texte en armenien classique recu en entree :
+   a. Segmente le texte en tokens selon les regles de l'armenien.
+   b. Pour chaque token, cherche le lemme correspondant dans le corpus HYE (data/corpus/train/HYE_train.tsv, colonne 'lemma').
+   c. Si plusieurs lemmes sont possibles, conserve-les tous pour resolution d'ambiguite.
+   d. Annote chaque token avec son lemme et son POS tag selon le tagset HYE (data/tagsets/HYE_tagset.txt).
+   e. Respecte strictement les normes definies dans AGENTS.md.
+2. Produit un fichier TSV avec les colonnes : form<TAB>lemma<TAB>pos
+3. Signale les tokens non trouves dans le corpus."""
+
+[tools.read_file]
+[tools.write_file]
+[tools.edit]
+
+denylist = []

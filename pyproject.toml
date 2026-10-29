@@ -1,0 +1,22 @@
+[project]
+name = "eacl2026-agentique"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Stev", email = "steven95.andre@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+eacl2026-agentique = "eacl2026_agentique:main"
+
+[build-system]
+requires = ["uv_build>=0.13.4,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.uv.workspace]
+members = [
+    "projet",
+]
